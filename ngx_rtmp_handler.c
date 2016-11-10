@@ -23,7 +23,6 @@ ngx_rtmp_bandwidth_t        ngx_rtmp_bw_out;
 ngx_rtmp_bandwidth_t        ngx_rtmp_bw_in;
 
 
-#ifdef NGX_DEBUG
 char*
 ngx_rtmp_message_type(uint8_t type)
 {
@@ -77,7 +76,6 @@ ngx_rtmp_user_message_type(uint16_t evt)
         ? evts[evt]
         : "?";
 }
-#endif
 
 
 void
@@ -760,7 +758,6 @@ ngx_rtmp_receive_message(ngx_rtmp_session_t *s,
 
     cmcf = ngx_rtmp_get_module_main_conf(s, ngx_rtmp_core_module);
 
-#ifdef NGX_DEBUG
     {
         int             nbufs;
         ngx_chain_t    *ch;
@@ -775,7 +772,6 @@ ngx_rtmp_receive_message(ngx_rtmp_session_t *s,
                 ngx_rtmp_message_type(h->type), (int)h->type,
                 h->csid, h->timestamp, h->mlen, h->msid, nbufs);
     }
-#endif
 
     if (h->type > NGX_RTMP_MSG_MAX) {
         ngx_log_debug1(NGX_LOG_DEBUG_RTMP, s->connection->log, 0,

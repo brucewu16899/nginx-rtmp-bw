@@ -329,6 +329,7 @@ ngx_rtmp_cmd_create_stream_init(ngx_rtmp_session_t *s, ngx_rtmp_header_t *h,
                                 ngx_chain_t *in)
 {
     static ngx_rtmp_create_stream_t     v;
+    ngx_rtmp_core_srv_conf_t   *cscf;
 
     static ngx_rtmp_amf_elt_t  in_elts[] = {
 
@@ -345,6 +346,9 @@ ngx_rtmp_cmd_create_stream_init(ngx_rtmp_session_t *s, ngx_rtmp_header_t *h,
 
     ngx_log_error(NGX_LOG_INFO, s->connection->log, 0, "createStream");
 
+    cscf = ngx_rtmp_get_module_srv_conf(s, ngx_rtmp_core_module);
+    ngx_rtmp_send_bandwidth(s, cscf->ack_window,
+                                   NGX_RTMP_LIMIT_DYNAMIC) ;
     return ngx_rtmp_create_stream(s, &v);
 }
 
